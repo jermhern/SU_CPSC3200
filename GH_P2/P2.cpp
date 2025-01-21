@@ -1,33 +1,18 @@
 #include "ArithSeq.h"
+#include "AsymPattern.h"
 #include <iostream>
+#include <map>
 
 using namespace std;
 
 int main() {
 
-  ArithSeq as(1,2,10, 30);
-  ArithSeq ab(as);
-  const ArithSeq ac(1, 1, 10, 30);
+  ArithSeq aSeq(1, 2, 5, 30);
+  ArithSeq bSeq(1, 1, 5, 30);
+  ArithSeq cSeq(1, 2, 10, 30);
 
-  AsymPattern collection;
-
-  for (int i = 0; i < 5; i++) {
-    cout << as.getSequence()[i] << " ";
-  }
-
-  cout << endl;
-
-  for (int i = 0; i < 5; i++) {
-    cout << ab.getSequence()[i] << " ";
-  }
-
-  cout << endl;
-  ab = ac;
-
-  for (int i = 0; i < 10; i++) {
-    cout << ab.getSequence()[i] << " ";
-  }
-
+  const map<int, ArithSeq> INJECT = { {1, aSeq}, {2, bSeq}, {3, cSeq} };
+  AsymPattern collection(INJECT);
 
   return 0;
 }

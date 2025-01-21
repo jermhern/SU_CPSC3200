@@ -7,20 +7,22 @@
 #define ASYMPATTERN_H
 
 #include <map>
-#include "ArithSeq.h";
+#include "ArithSeq.h"
+
+using namespace std;
 
 class AsymPattern {
-
 	public:
-		ArithSeq();
-		~ArithSeq();
+		explicit AsymPattern(map<int, ArithSeq>);
+		~AsymPattern();
 
 		void addArithSeq(int, const ArithSeq&);
-		ArithSeq* getArithSeq(int);
+		ArithSeq getArithSeq(int);
 		void removeArithSeq(int);
 
 	private:
 		map<int, ArithSeq> sequences;
+		bool seqExists(int);
 };
 
 #endif
