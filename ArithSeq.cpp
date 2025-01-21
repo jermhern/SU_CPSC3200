@@ -125,3 +125,71 @@ ArithSeq &ArithSeq::operator=(ArithSeq&& src) {
 }
 
 // Operations from P1
+void ArithSeq::exceedsMaxOperations() {
+	if (operations >= maxOperations) {
+		throw invalid_argument("Exceeded max operations");
+	}
+
+	operations++;
+}
+
+int* ArithSeq::getSequence() {
+    if (n == 0) {
+        throw invalid_argument("Sequence is empty");
+    }
+
+    return sequence;
+}
+
+int ArithSeq::getKthValue(int k) {
+    if (k < 0 || k >= n)
+    {
+        throw invalid_argument("K must be between 0 and sequence length");
+    }
+
+    exceedsMaxOperations();
+    return getSequence()[k];
+}
+
+int ArithSeq::divisibleBy(int divisor) {
+    if (divisor == 0)
+    {
+        throw invalid_argument("Divisor must not equal 0");
+    }
+
+    int count = 0;
+    for (int i = 0; i < n; i++)
+    {
+        if ((sequence[i] % divisor) == 0)
+        {
+            count++;
+        }
+    }
+
+    exceedsMaxOperations();
+    return count;
+}
+
+void ArithSeq::modifySequence(int p, int q) {
+    if (p < 0 || p >= n)
+    {
+        throw invalid_argument("p must be between 0 and sequence length");
+    }
+
+    if (q == 0) return;
+
+    for (int i = p; i < n; i += p)
+    {
+        sequence[i] += q;
+        exceedsMaxOperations();
+    }
+}
+
+void ArithSeq::reset() {
+    for (int i = 0; i < n; i++)
+    {
+        sequence[i] = originalSequence[i];
+    }
+
+    operations = 0;
+}

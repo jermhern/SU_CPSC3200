@@ -20,7 +20,7 @@ class ArithSeq {
       int getKthValue(int k);
       int divisibleBy(int divisor);
       void modifySequence(int p, int q);
-      void Reset();
+      void reset();
 
     private:
       void exceedsMaxOperations();
