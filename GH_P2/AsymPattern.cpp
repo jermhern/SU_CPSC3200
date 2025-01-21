@@ -12,13 +12,29 @@
 
 
 AsymPattern::AsymPattern(const map<int, ArithSeq> inject) {
+  	// add logic to prevent overflow
 	sequences = inject;
+    originalSequences = inject;
 }
 
 AsymPattern::~AsymPattern() {}
 
+// Private utility function for copy
+
+// Overloaded Assignment Operator
+
+// Copy Constructor
+
+/// MOVE SEMANTICS (&&)
+// Move Assignment Operator
+// Move Constructor
+
 bool AsymPattern::seqExists(int key) {
-	return (sequences.find(key) == sequences.end());
+	return (sequences.find(key) != sequences.end());
+}
+
+bool AsymPattern::atCapacity() {
+	return (sequences.size() < MAX_CAPACITY);
 }
 
 void AsymPattern::addArithSeq(int key, const ArithSeq& seq) {
@@ -27,7 +43,9 @@ void AsymPattern::addArithSeq(int key, const ArithSeq& seq) {
     	throw invalid_argument("Invalid key - cannot overwrite values with exisiting keys");
   	}
 
-	sequences.insert({key, seq});
+    if (!atCapacity()) {
+     	sequences.insert({key, seq});
+    }
 }
 
 ArithSeq AsymPattern::getArithSeq(int key) {
@@ -45,4 +63,8 @@ void AsymPattern::removeArithSeq(int key) {
   }
 
   sequences.erase(key);
+}
+
+void AsymPattern::reset() {
+  sequences = originalSequences;
 }

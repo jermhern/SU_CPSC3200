@@ -14,5 +14,9 @@ int main() {
   const map<int, ArithSeq> INJECT = { {1, aSeq}, {2, bSeq}, {3, cSeq} };
   AsymPattern collection(INJECT);
 
+  collection.addArithSeq(1, ArithSeq(1, 10, 10, 30));
+
+  cout << collection.getArithSeq(1).getKthValue(4);
+
   return 0;
 }

@@ -19,10 +19,14 @@ class AsymPattern {
 		void addArithSeq(int, const ArithSeq&);
 		ArithSeq getArithSeq(int);
 		void removeArithSeq(int);
+		void reset();
 
 	private:
 		map<int, ArithSeq> sequences;
+		map<int, ArithSeq> originalSequences;
 		bool seqExists(int);
+		bool atCapacity();
+		const int MAX_CAPACITY = 10;
 };
 
 #endif

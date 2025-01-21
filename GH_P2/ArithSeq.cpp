@@ -111,7 +111,7 @@ ArithSeq::ArithSeq(ArithSeq&& src) {
     src.operations = 0;
 }
 
-//// Move Constructor
+// Move Constructor
 ArithSeq &ArithSeq::operator=(ArithSeq&& src) {
     swap(a1, src.a1);
     swap(dst, src.dst);
