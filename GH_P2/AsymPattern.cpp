@@ -49,7 +49,7 @@ bool AsymPattern::seqExists(int key) {
   	if (key >= 0 && key < size_) {
     	return true;
     }
-	return true;
+	return false;
 }
 
 bool AsymPattern::atCapacity() {
@@ -58,8 +58,8 @@ bool AsymPattern::atCapacity() {
 
 void AsymPattern::setArithSeq(int p, int q, int key) {
 
-  	if (seqExists(key)) {
-    	throw invalid_argument("Invalid key - cannot overwrite values with exisiting keys");
+  	if (!seqExists(key)) {
+    	throw invalid_argument("Invalid key for accessing ArithSeq");
   	}
 
     sequences_[key]->modifySequence(p,q);
@@ -67,7 +67,7 @@ void AsymPattern::setArithSeq(int p, int q, int key) {
 
 ArithSeq* AsymPattern::getArithSeq(int key) {
 
-  if (seqExists(key)) {
+  if (!seqExists(key)) {
     throw invalid_argument("Invalid key for accessing ArithSeq");
   }
 

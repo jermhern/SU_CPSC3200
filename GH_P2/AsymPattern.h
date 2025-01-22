@@ -13,19 +13,19 @@ using namespace std;
 
 class AsymPattern {
 	public:
-		AsymPattern(ArithSeq*, int);
+		AsymPattern(ArithSeq*, int size);
 		~AsymPattern();
 
-		void addArithSeq(int, const ArithSeq&);
-		ArithSeq* getArithSeq(int);
-		void setArithSeq(int, int, int);
-		void resetSeq(int);
+		void addArithSeq(int key, const ArithSeq&);
+		ArithSeq* getArithSeq(int key);
+		void setArithSeq(int p, int q, int key);
+		void resetSeq(int key);
 
 	private:
 		ArithSeq** sequences_;
 		int size_;
 
-		bool seqExists(int);
+		bool seqExists(int key);
 		bool atCapacity();
 		const int MAX_CAPACITY = 10;
 };
