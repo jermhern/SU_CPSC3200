@@ -13,7 +13,7 @@ using namespace std;
 
 class AsymPattern {
 	public:
-		explicit AsymPattern(ArithSeq*);
+		AsymPattern(ArithSeq*);
 		~AsymPattern();
 
 		void addArithSeq(int, const ArithSeq&);
@@ -22,8 +22,9 @@ class AsymPattern {
 		void resetAllSeq();
 
 	private:
-		ArithSeq* sequences;
-		ArithSeq* originalSequences;
+		ArithSeq* sequences_;
+		int size_;
+
 		bool seqExists(int);
 		bool atCapacity();
 		const int MAX_CAPACITY = 10;

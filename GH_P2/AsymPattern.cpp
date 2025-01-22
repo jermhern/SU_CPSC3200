@@ -11,8 +11,13 @@
 #include <stdexcept>
 
 
-AsymPattern::AsymPattern(ArithSeq* seq) {
+AsymPattern::AsymPattern(ArithSeq* sequences) {
+	if (sequences == nullptr) {
+    	throw invalid_argument("Null ArithSeq Dependency");
+    }
 
+    // inject via constructor
+    this->sequences_ = sequences;
 }
 
 AsymPattern::~AsymPattern() {}
@@ -47,6 +52,8 @@ ArithSeq* AsymPattern::getArithSeq(int key) {
   if (seqExists(key)) {
     throw invalid_argument("Invalid key for accessing ArithSeq");
   }
+
+  return nullptr;
 }
 
 void AsymPattern::removeArithSeq(int key) {
