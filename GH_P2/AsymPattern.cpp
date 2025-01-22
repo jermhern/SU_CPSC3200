@@ -11,10 +11,8 @@
 #include <stdexcept>
 
 
-AsymPattern::AsymPattern(const map<int, ArithSeq> inject) {
-  	// add logic to prevent overflow
-	sequences = inject;
-    originalSequences = inject;
+AsymPattern::AsymPattern(ArithSeq* seq) {
+
 }
 
 AsymPattern::~AsymPattern() {}
@@ -30,11 +28,11 @@ AsymPattern::~AsymPattern() {}
 // Move Constructor
 
 bool AsymPattern::seqExists(int key) {
-	return (sequences.find(key) != sequences.end());
+	return false;
 }
 
 bool AsymPattern::atCapacity() {
-	return (sequences.size() < MAX_CAPACITY);
+  return false;
 }
 
 void AsymPattern::addArithSeq(int key, const ArithSeq& seq) {
@@ -42,29 +40,19 @@ void AsymPattern::addArithSeq(int key, const ArithSeq& seq) {
   	if (seqExists(key)) {
     	throw invalid_argument("Invalid key - cannot overwrite values with exisiting keys");
   	}
-
-    if (!atCapacity()) {
-     	sequences.insert({key, seq});
-    }
 }
 
-ArithSeq AsymPattern::getArithSeq(int key) {
+ArithSeq* AsymPattern::getArithSeq(int key) {
 
   if (seqExists(key)) {
     throw invalid_argument("Invalid key for accessing ArithSeq");
   }
-
-  return sequences.at(key);
 }
 
 void AsymPattern::removeArithSeq(int key) {
   if (seqExists(key)) {
     throw invalid_argument("Invalid key for removing ArithSeq");
   }
-
-  sequences.erase(key);
 }
 
-void AsymPattern::reset() {
-  sequences = originalSequences;
-}
+void AsymPattern::resetAllSeq() {}

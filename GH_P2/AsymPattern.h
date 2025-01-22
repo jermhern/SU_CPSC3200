@@ -13,17 +13,17 @@ using namespace std;
 
 class AsymPattern {
 	public:
-		explicit AsymPattern(map<int, ArithSeq>);
+		explicit AsymPattern(ArithSeq*);
 		~AsymPattern();
 
 		void addArithSeq(int, const ArithSeq&);
-		ArithSeq getArithSeq(int);
+		ArithSeq* getArithSeq(int);
 		void removeArithSeq(int);
-		void reset();
+		void resetAllSeq();
 
 	private:
-		map<int, ArithSeq> sequences;
-		map<int, ArithSeq> originalSequences;
+		ArithSeq* sequences;
+		ArithSeq* originalSequences;
 		bool seqExists(int);
 		bool atCapacity();
 		const int MAX_CAPACITY = 10;
