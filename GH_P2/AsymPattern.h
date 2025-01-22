@@ -13,16 +13,16 @@ using namespace std;
 
 class AsymPattern {
 	public:
-		AsymPattern(ArithSeq*);
+		AsymPattern(ArithSeq*, int);
 		~AsymPattern();
 
 		void addArithSeq(int, const ArithSeq&);
 		ArithSeq* getArithSeq(int);
-		void removeArithSeq(int);
-		void resetAllSeq();
+		void setArithSeq(int, int, int);
+		void resetSeq(int);
 
 	private:
-		ArithSeq* sequences_;
+		ArithSeq** sequences_;
 		int size_;
 
 		bool seqExists(int);

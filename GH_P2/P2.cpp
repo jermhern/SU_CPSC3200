@@ -12,5 +12,6 @@ int main() {
   ArithSeq cSeq(3, 2, 10, 30);
 
 
+
   return 0;
 }

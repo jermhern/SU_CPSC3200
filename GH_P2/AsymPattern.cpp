@@ -11,16 +11,29 @@
 #include <stdexcept>
 
 
-AsymPattern::AsymPattern(ArithSeq* sequences) {
+AsymPattern::AsymPattern(ArithSeq* sequences, int size) {
+
+  	if (size > MAX_CAPACITY) {
+    	throw invalid_argument("Size given exceeds max capacity");
+    }
+
 	if (sequences == nullptr) {
-    	throw invalid_argument("Null ArithSeq Dependency");
+    	throw invalid_argument("Null ArithSeq Dependency recieved");
     }
 
     // inject via constructor
-    this->sequences_ = sequences;
+    this->size_ = size;
+    this->sequences_ = new ArithSeq* [size_];
+
+    for (int i = 0; i < size_; i++) {
+      // AsymPattern will not own objects
+      sequences_[i] = &sequences[i];
+    }
 }
 
-AsymPattern::~AsymPattern() {}
+AsymPattern::~AsymPattern() {
+  delete[] sequences_;
+}
 
 // Private utility function for copy
 
@@ -33,18 +46,23 @@ AsymPattern::~AsymPattern() {}
 // Move Constructor
 
 bool AsymPattern::seqExists(int key) {
-	return false;
+  	if (key >= 0 && key < size_) {
+    	return true;
+    }
+	return true;
 }
 
 bool AsymPattern::atCapacity() {
-  return false;
+  return size_ <= MAX_CAPACITY;
 }
 
-void AsymPattern::addArithSeq(int key, const ArithSeq& seq) {
+void AsymPattern::setArithSeq(int p, int q, int key) {
 
   	if (seqExists(key)) {
     	throw invalid_argument("Invalid key - cannot overwrite values with exisiting keys");
   	}
+
+    sequences_[key]->modifySequence(p,q);
 }
 
 ArithSeq* AsymPattern::getArithSeq(int key) {
@@ -53,13 +71,10 @@ ArithSeq* AsymPattern::getArithSeq(int key) {
     throw invalid_argument("Invalid key for accessing ArithSeq");
   }
 
-  return nullptr;
+  return sequences_[key];
 }
 
-void AsymPattern::removeArithSeq(int key) {
-  if (seqExists(key)) {
-    throw invalid_argument("Invalid key for removing ArithSeq");
-  }
-}
 
-void AsymPattern::resetAllSeq() {}
+void AsymPattern::resetSeq(int key) {
+  sequences_[key]->reset();
+}
