@@ -20,7 +20,7 @@ class AsymPattern {
 		AsymPattern& operator=(AsymPattern&&); // move
 		~AsymPattern();
 
-		void addArithSeq(int key, const ArithSeq&);
+		void addArithSeq(int key, ArithSeq&);
 		ArithSeq* getArithSeq(int key);
 		void setArithSeq(int p, int q, int key);
 		void resetSeq(int key);

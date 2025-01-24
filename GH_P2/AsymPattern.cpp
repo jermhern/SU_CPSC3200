@@ -89,6 +89,15 @@ bool AsymPattern::atCapacity() {
   return size_ <= MAX_CAPACITY;
 }
 
+void AsymPattern::addArithSeq(int key, ArithSeq& seq) {
+
+  if (atCapacity() && key >= MAX_CAPACITY-1) {
+    throw invalid_argument("Adding sequence out of bounds not allowed. Please overwrite existing memory.");
+  }
+
+  sequences_[key] = &seq;
+}
+
 void AsymPattern::setArithSeq(int p, int q, int key) {
 
   	if (!seqExists(key)) {

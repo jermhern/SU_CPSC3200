@@ -11,18 +11,15 @@ using namespace std;
 // Constructor
 ArithSeq::ArithSeq(int firstTerm, int difference, int sequenceLength, int maxOp) {
 
-    if (sequenceLength <= 0)
-    {
+    if (sequenceLength <= 0) {
         throw invalid_argument("Sequence length must be greater than or equal to 0");
     }
 
-    if (maxOp < 0)
-    {
+    if (maxOp < 0) {
         throw invalid_argument("Max operations must be greater than 0");
     }
 
-    if (difference <= 0)
-    {
+    if (difference <= 0) {
         throw invalid_argument("Difference must be greater than 0");
     }
 
@@ -61,7 +58,7 @@ void ArithSeq::copy(const ArithSeq& src) {
     dst = src.dst;
     n = src.n;
     maxOperations = src.maxOperations;
-    operations = src.operations;
+    operations = 0; // new objects will be set to 0
 
     sequence = new int[n];
     for (int i = 0; i < n; i++) {
@@ -142,8 +139,7 @@ int* ArithSeq::getSequence() {
 }
 
 int ArithSeq::getKthValue(int k) {
-    if (k < 0 || k >= n)
-    {
+    if (k < 0 || k >= n) {
         throw invalid_argument("K must be between 0 and sequence length");
     }
 
@@ -171,23 +167,21 @@ int ArithSeq::divisibleBy(int divisor) {
 }
 
 void ArithSeq::modifySequence(int p, int q) {
-    if (p < 0 || p >= n)
-    {
+    if (p < 0 || p >= n) {
         throw invalid_argument("p must be between 0 and sequence length");
     }
 
-    if (q == 0) return;
+    if (q == 0) return; // ignore no change
 
-    for (int i = p; i < n; i += p)
-    {
+    for (int i = p; i < n; i += (p == 0 ? 1 : q)) { // user can change sequence from 0
         sequence[i] += q;
-        exceedsMaxOperations();
     }
+
+    exceedsMaxOperations();
 }
 
 void ArithSeq::reset() {
-    for (int i = 0; i < n; i++)
-    {
+    for (int i = 0; i < n; i++) {
         sequence[i] = originalSequence[i];
     }
 
