@@ -14,6 +14,10 @@ using namespace std;
 class AsymPattern {
 	public:
 		AsymPattern(ArithSeq*, int size);
+		AsymPattern(const AsymPattern&); // Copy Constructor
+		AsymPattern(AsymPattern&& src); // move
+		AsymPattern& operator=(const AsymPattern&); // Overloaded Assignment Operator
+		AsymPattern& operator=(AsymPattern&&); // move
 		~AsymPattern();
 
 		void addArithSeq(int key, const ArithSeq&);
@@ -28,6 +32,8 @@ class AsymPattern {
 		bool seqExists(int key);
 		bool atCapacity();
 		const int MAX_CAPACITY = 10;
+
+		void copy(const AsymPattern& src);
 };
 
 #endif

@@ -13,7 +13,6 @@ class ArithSeq {
       ArithSeq(ArithSeq&& src);
       ArithSeq& operator=(const ArithSeq&); // Overloaded Assignment Operator
       ArithSeq& operator=(ArithSeq&&);
-
       ~ArithSeq();
 
       int* getSequence();

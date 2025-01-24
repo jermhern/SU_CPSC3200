@@ -10,7 +10,6 @@
 #include <iostream>
 #include <stdexcept>
 
-
 AsymPattern::AsymPattern(ArithSeq* sequences, int size) {
 
   	if (size > MAX_CAPACITY) {
@@ -36,14 +35,48 @@ AsymPattern::~AsymPattern() {
 }
 
 // Private utility function for copy
+void AsymPattern::copy(const AsymPattern& src) {
+  size_ = src.size_;
+
+  sequences_ = new ArithSeq* [size_];
+  for (int i = 0; i < size_; i++) {
+    sequences_[i] = src.sequences_[i];
+  }
+}
 
 // Overloaded Assignment Operator
+AsymPattern &AsymPattern::operator=(const AsymPattern& src) {
+  if (this == &src) { return *this; } // guard clause
+
+  delete[] sequences_;
+  copy(src);
+
+  return *this;
+}
 
 // Copy Constructor
+AsymPattern::AsymPattern(const AsymPattern& src) {
+  copy(src);
+}
 
 /// MOVE SEMANTICS (&&)
 // Move Assignment Operator
+AsymPattern::AsymPattern(AsymPattern&& src) {
+    size_ = src.size_;
+    sequences_ = src.sequences_;
+
+    src.size_ = 0;
+    src.sequences_ = 0;
+}
+
 // Move Constructor
+AsymPattern &AsymPattern::operator=(AsymPattern&& src) {
+
+  swap(size_, src.size_);
+  swap(sequences_, src.sequences_);
+
+  return *this;
+}
 
 bool AsymPattern::seqExists(int key) {
   	if (key >= 0 && key < size_) {
@@ -73,7 +106,6 @@ ArithSeq* AsymPattern::getArithSeq(int key) {
 
   return sequences_[key];
 }
-
 
 void AsymPattern::resetSeq(int key) {
   sequences_[key]->reset();
