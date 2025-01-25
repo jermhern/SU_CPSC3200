@@ -6,6 +6,8 @@
     Class Invariants:
     1. Setting the maximum number of operations for Arith Seq must be at least 30,
         which will be set automatically within the constructor if a valid value is not given.
+        A public query method is available to veridy that an object can perform an operation without
+        throwing an exception.
     2. The length of the ArithSeq must always be greater than 0. The constructor will
         throw an error if an invalid length value (0 => n) is given.
     3. A valid difference for the construction of the object, and for the modify method, This prevents
@@ -209,3 +211,15 @@ void ArithSeq::reset() {
 bool ArithSeq::canPerformMoreOperations() {
   return operations < maxOperations;
 }
+
+/*
+ * Implementation Invariant:
+ *  1. The maxOperations variable must always be 30 >=. If this is not provided within the constructor it will default.
+ *  2. The length of the sequence, n, must always be greater than 0.
+ *  3. The difference between terms, dst, must always be greater than 0.
+ *  4. The originalSequence array will always be equal to the initial state of sequence when it is constructed.
+ *  5. The sequence array will always have the same length as 'n', and reflect values from the initial sequence formula.
+ *     Deviations to the original sequence formula will be performed by the ModifySequence method.
+ *   6. The getKthValue method parameter must recieve a value larger than 0 and less than the sequence length.
+ *   7. The divisibleBy method parameter must not equal 0
+ */
