@@ -22,19 +22,7 @@ class ArithSeq {
       int divisibleBy(int divisor);
       void modifySequence(int p, int q);
       void reset();
-
-      void testPrint() {
-          std::cout << "current: ";
-          for (int i = 0; i < n; i++) {
-              std::cout << sequence[i] << " ";
-          }
-          std::cout << std::endl;
-          std::cout << "original: ";
-          for (int i = 0; i < n; i++) {
-              std::cout << originalSequence[i] << " ";
-          }
-          std::cout << std::endl << std::endl;
-      }
+      bool canPerformMoreOperations(); // public query regarding state
 
     private:
       void exceedsMaxOperations();

@@ -2,6 +2,22 @@
 // Created by Jeremy on 1/17/25.
 //
 
+/*
+    Class Invariants:
+    1. Setting the maximum number of operations for Arith Seq must be at least 30,
+        which will be set automatically within the constructor if a valid value is not given.
+    2. The length of the ArithSeq must always be greater than 0. The constructor will
+        throw an error if an invalid length value (0 => n) is given.
+    3. A valid difference for the construction of the object, and for the modify method, This prevents
+        an invalid sequence to form, or no changes to be made.
+    4. The original sequence value is used to keep track of the sequence before any operations can be made.
+        This is required in order to return the sequence to its original state after Reset().
+    5. In order to get the Kth value from an ArithSeq object the value k that is passed into the method must
+       be larger than 0 and less than the sequence length, or an invalid argument exception will be thrown.
+    6. In order to return the integer of values divisible by an integer, divisor parameter into the method must
+       not equal 0, or divide by zero exception will be thrown.
+*/
+
 #include "ArithSeq.h"
 #include <stdexcept>
 #include <utility>
@@ -123,6 +139,7 @@ ArithSeq &ArithSeq::operator=(ArithSeq&& src) {
 
 // Operations from P1
 void ArithSeq::exceedsMaxOperations() {
+
 	if (operations >= maxOperations) {
 		throw invalid_argument("Exceeded max operations");
 	}
@@ -186,4 +203,9 @@ void ArithSeq::reset() {
     }
 
     operations = 0;
+}
+
+// public query regarding state
+bool ArithSeq::canPerformMoreOperations() {
+  return operations < maxOperations;
 }

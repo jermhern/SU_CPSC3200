@@ -13,7 +13,7 @@ using namespace std;
 
 class AsymPattern {
 	public:
-		AsymPattern(ArithSeq*, int size);
+		AsymPattern(ArithSeq*, int size = 10);
 		AsymPattern(const AsymPattern&); // Copy Constructor
 		AsymPattern(AsymPattern&& src); // move
 		AsymPattern& operator=(const AsymPattern&); // Overloaded Assignment Operator
@@ -21,7 +21,6 @@ class AsymPattern {
 		~AsymPattern();
 
 		void addArithSeq(int key, ArithSeq&);
-		ArithSeq* getArithSeq(int key);
 		void setArithSeq(int p, int q, int key);
 		void resetSeq(int key);
 

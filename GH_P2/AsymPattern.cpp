@@ -31,6 +31,7 @@ AsymPattern::AsymPattern(ArithSeq* sequences, int size) {
 }
 
 AsymPattern::~AsymPattern() {
+  cout << "deallocating memory" << endl;
   delete[] sequences_;
 }
 
@@ -105,15 +106,6 @@ void AsymPattern::setArithSeq(int p, int q, int key) {
   	}
 
     sequences_[key]->modifySequence(p,q);
-}
-
-ArithSeq* AsymPattern::getArithSeq(int key) {
-
-  if (!seqExists(key)) {
-    throw invalid_argument("Invalid key for accessing ArithSeq");
-  }
-
-  return sequences_[key];
 }
 
 void AsymPattern::resetSeq(int key) {
