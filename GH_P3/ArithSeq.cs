@@ -89,6 +89,11 @@ namespace ArithSeq
 
             operations++;
         }
+        
+        // public query regarding state
+        bool canPerformMoreOperations() {
+            return operations < maxOperations;
+        }
 
         public int[] GetSequence()
         {
@@ -98,7 +103,6 @@ namespace ArithSeq
             }
 
             return sequence;
-            
         }
 
         public int GetKthValue(int k)
@@ -143,11 +147,12 @@ namespace ArithSeq
 
             if (q == 0) return;
 
-            for (int i = p; i < sequence.Length; i += p)
-            {
+            for (int i = p; i < n; i += (p == 0 ? 1 : q)) 
+            { // user can change sequence from 0
                 sequence[i] += q;
-                ExceedsMaxOperations();
             }
+            
+            ExceedsMaxOperations();
         }
 
         // PRECONDITION: arithSeq is a potentially modified sequence of length 'n'
