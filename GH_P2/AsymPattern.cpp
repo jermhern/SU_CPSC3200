@@ -33,12 +33,12 @@
 
 AsymPattern::AsymPattern(ArithSeq* sequences, int size) {
 
-  	if (size > MAX_CAPACITY) {
-    	throw invalid_argument("Size given exceeds max capacity");
+    if (size > MAX_CAPACITY) {
+       throw invalid_argument("Size given exceeds max capacity");
     }
 
-	if (sequences == nullptr) {
-    	throw invalid_argument("Null ArithSeq Dependency recieved");
+    if (sequences == nullptr) {
+        throw invalid_argument("Null ArithSeq Dependency recieved");
     }
 
     // inject via constructor
@@ -100,10 +100,8 @@ AsymPattern &AsymPattern::operator=(AsymPattern&& src) {
 }
 
 bool AsymPattern::seqExists(int key) {
-  	if (key >= 0 && key < size_) {
-    	return true;
-    }
-	return false;
+    if (key >= 0 && key < size_) { return true; }
+    return false;
 }
 
 bool AsymPattern::atCapacity() {
@@ -111,30 +109,29 @@ bool AsymPattern::atCapacity() {
 }
 
 void AsymPattern::addArithSeq(int key, ArithSeq& seq) {
+    if (atCapacity() && key >= MAX_CAPACITY-1) {
+        throw invalid_argument("Adding sequence out of bounds not allowed. Please overwrite existing memory.");
+    }
 
-  if (atCapacity() && key >= MAX_CAPACITY-1) {
-    throw invalid_argument("Adding sequence out of bounds not allowed. Please overwrite existing memory.");
-  }
-
-  sequences_[key] = &seq;
+    sequences_[key] = &seq;
 }
 
 void AsymPattern::setArithSeq(int p, int q, int key) {
 
-  	if (!seqExists(key)) {
+    if (!seqExists(key)) {
     	throw invalid_argument("Set Error: Invalid key for accessing ArithSeq");
-  	}
+    }
 
     sequences_[key]->modifySequence(p,q);
 }
 
 void AsymPattern::resetSeq(int key) {
 
-  if (!seqExists(key)) {
-    	throw invalid_argument("Reset Error: Invalid key for accessing ArithSeq");
-  	}
+    if (!seqExists(key)) {
+        throw invalid_argument("Reset Error: Invalid key for accessing ArithSeq");
+    }
 
-  sequences_[key]->reset();
+    sequences_[key]->reset();
 }
 
 /*
