@@ -4,7 +4,7 @@
 
 /*
     Class Invariants:
-    1. Setting the maximum number of operations for Arith Seq must be at least 30,
+    1.  Setting the maximum number of operations for Arith Seq must be at least 30,
         which will be set automatically within the constructor if a valid value is not given.
         A public query method is available to veridy that an object can perform an operation without
         throwing an exception.

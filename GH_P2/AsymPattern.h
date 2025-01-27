@@ -23,15 +23,13 @@ class AsymPattern {
 		void addArithSeq(int key, ArithSeq&);
 		void setArithSeq(int p, int q, int key);
 		void resetSeq(int key);
+		bool seqExists(int key); // public query regarding state
 
 	private:
 		ArithSeq** sequences_;
 		int size_;
-
-		bool seqExists(int key);
 		bool atCapacity();
 		const int MAX_CAPACITY = 10;
-
 		void copy(const AsymPattern& src);
 };
 
