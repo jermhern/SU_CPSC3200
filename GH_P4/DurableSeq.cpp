@@ -1,3 +1,8 @@
+//
+// Updated by Jeremy on 3/2/25.
+// Implementation file in C++ for DurableSeq
+//
+
 #include "DurableSeq.h"
 #include "AsymPattern.h"
 #include "ArithSeq.h"

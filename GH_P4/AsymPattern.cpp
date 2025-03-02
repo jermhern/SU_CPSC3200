@@ -1,5 +1,5 @@
 //
-// Created by Jeremy on 1/21/25.
+// Updated by Jeremy on 3/2/25.
 // cpp file for AsymPattern Implementation
 //
 
@@ -80,6 +80,9 @@ AsymPattern::AsymPattern(ArithSeq* sequences, int size): sequences_(), originalS
 AsymPattern::~AsymPattern() {}
 
 // Private utility function for copy
+// PRECONDITION: A valid AsymPattern object is given to the overloaded = operator
+// POSTCONDITION: Utilzing the private utility copy function the current AsymPattern object will take data from src
+//				  only if the two objects do not share the same address. The new AsymPattern object will be returned
 void AsymPattern::copy(const AsymPattern& src) {
   size_ = src.size_;
 
@@ -93,9 +96,11 @@ void AsymPattern::copy(const AsymPattern& src) {
 }
 
 // Overloaded Operators
+// PRECONDITION: A valid AsymPattern object is given to the overloaded = operator
+// POSTCONDITION: Utilzing the private utility copy function the current AsymPattern object will take data from src
+//				  only if the two objects do not share the same address. The new AsymPattern object will be returned
 AsymPattern &AsymPattern::operator=(const AsymPattern& src) {
   if (this == &src) { return *this; } // guard clause
-
   copy(src);
   return *this;
 }
