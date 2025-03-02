@@ -264,4 +264,7 @@ bool DurableSeq::seqExists(int key) {
  * 	 Private members cannot be accessed outside the class, any attempt to copy DurableSeq will fail at compile time
 * 	8. "In C++17 it is recommended that the form array form std::shared_ptr<T[]> should be used rather than
  * 		constructing a std::shared_ptr<T> from a std::unique_ptr<T[]> in C++11 and C++14" - cppreference
+*  9. DurableSeq supports ==/!= operators, post/pre-fix operators for incrementation and subtraction (++/--), and
+ * 		the [] accessor which will return an shared_ptr belonging to the ArithSeq object. Although DurableSeq does not
+ * 		fully support integer addition through +=/+ operators, it is compatible with other DurableSeq objects
  */

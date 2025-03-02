@@ -22,7 +22,8 @@
 * 	- >> and << will not be overloaded as operators +, += have been provided to stream data into thre desired object, and
 	  due to the simplicity of the object, the client can use public methods .getSize() provided to print out the data
 * 	- The +, += operators will work with other ArithSeq objects due to their complexity. Additionally, these operators
-	  may be used with integers to increase each value in the sequence by the integer that has been passed in
+	  may be used with integers to increase each value in the sequence by the integer that has been passed in.
+	  With this being said, addition is fully supported within the ArithSeq class.
  *  - The post/pre-fix operators ++ and -- will increment or decrement every value, in every ArithSeq object, by 1
 * 	- Equality operators ==/!= have been provided and return a boolean regarding the equality of the ArithSeq Objects
 * 	- the [] accessor has been overloaded which provides a way to return a integer to the valid index provided
@@ -336,4 +337,7 @@ bool ArithSeq::canPerformMoreOperations() {
  *   7. The divisibleBy method parameter must not equal 0
 * 	 8. "In C++17 it is recommended that the form array form std::shared_ptr<T[]> should be used rather than
  * 		constructing a std::shared_ptr<T> from a std::unique_ptr<T[]> in C++11 and C++14" - cppreference
+* 	9. ArithSeq fully supports ArithSeq and integer addition through +, += operators
+* 	10. ArithSeq supports ==/!= operators, post/pre-fix operators for incrementation and subtraction (++/--),
+ * 		the [] accessor which will return an integer belonging to the ArithSeq object
  */
