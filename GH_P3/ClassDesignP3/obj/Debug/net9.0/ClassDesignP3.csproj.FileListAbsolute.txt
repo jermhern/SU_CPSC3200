@@ -1,0 +1,15 @@
+/Users/jeremy/Desktop/School/wq2025/3200/GH_3200/GH_P3/ClassDesignP3/obj/Debug/net9.0/ClassDesignP3.GeneratedMSBuildEditorConfig.editorconfig
+/Users/jeremy/Desktop/School/wq2025/3200/GH_3200/GH_P3/ClassDesignP3/obj/Debug/net9.0/ClassDesignP3.AssemblyInfoInputs.cache
+/Users/jeremy/Desktop/School/wq2025/3200/GH_3200/GH_P3/ClassDesignP3/obj/Debug/net9.0/ClassDesignP3.AssemblyInfo.cs
+/Users/jeremy/Desktop/School/wq2025/3200/GH_3200/GH_P3/ClassDesignP3/obj/Debug/net9.0/ClassDesignP3.csproj.CoreCompileInputs.cache
+/Users/jeremy/Desktop/School/wq2025/3200/GH_3200/GH_P3/ClassDesignP3/obj/Debug/net9.0/ClassDesignP3.sourcelink.json
+/Users/jeremy/Desktop/School/wq2025/3200/GH_3200/GH_P3/ClassDesignP3/bin/Debug/net9.0/ClassDesignP3
+/Users/jeremy/Desktop/School/wq2025/3200/GH_3200/GH_P3/ClassDesignP3/bin/Debug/net9.0/ClassDesignP3.deps.json
+/Users/jeremy/Desktop/School/wq2025/3200/GH_3200/GH_P3/ClassDesignP3/bin/Debug/net9.0/ClassDesignP3.runtimeconfig.json
+/Users/jeremy/Desktop/School/wq2025/3200/GH_3200/GH_P3/ClassDesignP3/bin/Debug/net9.0/ClassDesignP3.dll
+/Users/jeremy/Desktop/School/wq2025/3200/GH_3200/GH_P3/ClassDesignP3/bin/Debug/net9.0/ClassDesignP3.pdb
+/Users/jeremy/Desktop/School/wq2025/3200/GH_3200/GH_P3/ClassDesignP3/obj/Debug/net9.0/ClassDesignP3.dll
+/Users/jeremy/Desktop/School/wq2025/3200/GH_3200/GH_P3/ClassDesignP3/obj/Debug/net9.0/refint/ClassDesignP3.dll
+/Users/jeremy/Desktop/School/wq2025/3200/GH_3200/GH_P3/ClassDesignP3/obj/Debug/net9.0/ClassDesignP3.pdb
+/Users/jeremy/Desktop/School/wq2025/3200/GH_3200/GH_P3/ClassDesignP3/obj/Debug/net9.0/ClassDesignP3.genruntimeconfig.cache
+/Users/jeremy/Desktop/School/wq2025/3200/GH_3200/GH_P3/ClassDesignP3/obj/Debug/net9.0/ref/ClassDesignP3.dll
