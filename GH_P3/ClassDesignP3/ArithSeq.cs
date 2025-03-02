@@ -13,10 +13,6 @@
         This is required in order to return the sequence to its original state after Reset(). 
 */
 
-using System;
-
-
-
 namespace ArithSeq
 {
     public class ArithSeq
@@ -25,9 +21,9 @@ namespace ArithSeq
         private int[] originalSequence;
         private int operations;
         private int maxOperations;
-        private readonly int a1;
-        private readonly int dst;
-        private readonly int n;
+        private readonly int firstTerm;
+        private readonly int diff;
+        private readonly int len;
 
         // ArithSeq()
         // PRECONDITIONS:
@@ -58,21 +54,21 @@ namespace ArithSeq
             }
 
             // validated inputs, set fields
-            a1 = firstTerm;
-            dst = difference;
-            n = sequenceLength;
+            firstTerm = firstTerm;
+            diff = difference;
+            len = sequenceLength;
             maxOperations = maxOp;
 
-            sequence = new int[n];
+            sequence = new int[len];
             // calculate each term of the sequence
-            for (int i = 0; i < n; i++)
+            for (int i = 0; i < len; i++)
             {
-                sequence[i] = a1 + i * dst;
+                sequence[i] = firstTerm + i * diff;
             }
 
             // shallow copy
-            originalSequence = new int[n];
-            for (int i = 0; i < n; i++)
+            originalSequence = new int[len];
+            for (int i = 0; i < len; i++)
             {
                 originalSequence[i] = sequence[i];
             }
@@ -147,7 +143,7 @@ namespace ArithSeq
 
             if (q == 0) return;
 
-            for (int i = p; i < n; i += (p == 0 ? 1 : q)) 
+            for (int i = p; i <len; i += (p == 0 ? 1 : q)) 
             { // user can change sequence from 0
                 sequence[i] += q;
             }
@@ -166,11 +162,6 @@ namespace ArithSeq
 
             operations = 0;
         }
-
-        public static void Main()
-        {
-            ArithSeq seq = new ArithSeq(1, 2, 10);
-        }
     }
 }
 
@@ -178,7 +169,7 @@ namespace ArithSeq
  * Implementation Invariant:
  *  1. The maxOperations variable must always be 30 >=. If this is not provided within the constructor it will default.
  *  2. The length of the sequence, n, must always be greater than 0.
- *  3. The difference between terms, dst, must always be greater than 0.
+ *  3. The difference between terms, diff, must always be greater than 0.
  *  4. The originalSequence array will always be equal to the initial state of sequence when it is constructed.
  *  5. The sequence array will always have the same length as 'n', and reflect values from the initial sequence formula.
  *     Deviations to the original sequence formula will be performed by the ModifySequence method.

@@ -1,7 +1,6 @@
 #include "ArithSeq.h"
 #include "AsymPattern.h"
 #include <iostream>
-#include <map>
 
 using namespace std;
 

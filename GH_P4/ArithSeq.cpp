@@ -18,28 +18,36 @@
        be larger than 0 and less than the sequence length, or an invalid argument exception will be thrown.
     6. In order to return the integer of values divisible by an integer, divisor parameter into the method must
        not equal 0, or divide by zero exception will be thrown.
+	7. Overloaded Operators
+* 	- >> and << will not be overloaded as operators +, += have been provided to stream data into thre desired object, and
+	  due to the simplicity of the object, the client can use public methods .getSize() provided to print out the data
+* 	- The +, += operators will work with other ArithSeq objects due to their complexity. Additionally, these operators
+	  may be used with integers to increase each value in the sequence by the integer that has been passed in
+ *  - The post/pre-fix operators ++ and -- will increment or decrement every value, in every ArithSeq object, by 1
+* 	- Equality operators ==/!= have been provided and return a boolean regarding the equality of the ArithSeq Objects
+* 	- the [] accessor has been overloaded which provides a way to return a integer to the valid index provided
 */
 
 #include "ArithSeq.h"
+#include <iostream>
 #include <stdexcept>
 #include <utility>
+#include <memory>
 
 using namespace std;
 
 // Constructor
-ArithSeq::ArithSeq(int firstTerm, int difference, int sequenceLength, int maxOp) {
-
-    if (sequenceLength <= 0) {
+ArithSeq::ArithSeq(int firstTerm, int difference, int sequenceLength, int maxOp): sequence(new int[sequenceLength]),
+                                                                                  originalSequence(new int[sequenceLength])
+{
+    if (sequenceLength <= 0)
         throw invalid_argument("Sequence length must be greater than or equal to 0");
-    }
 
-    if (maxOp < 0) {
+    if (maxOp < 0)
         throw invalid_argument("Max operations must be greater than 0");
-    }
 
-    if (difference <= 0) {
+    if (difference <= 0)
         throw invalid_argument("Difference must be greater than 0");
-    }
 
     // validated inputs, set fields
     a1 = firstTerm;
@@ -47,59 +55,155 @@ ArithSeq::ArithSeq(int firstTerm, int difference, int sequenceLength, int maxOp)
     n = sequenceLength;
     maxOperations = maxOp;
 
-    sequence = new int[n];
-    // calculate each term of the sequence
-    for (int i = 0; i < n; i++)
-    {
-        sequence[i] = a1 + i * dst;
-    }
-
-    // shallow copy
-    originalSequence = new int[n];
-    for (int i = 0; i < n; i++)
-    {
+    // calculate each term of the sequence & create copy
+    for (int i = 0; i < n; i++) {
+      	sequence[i] = a1 + i * dst;
         originalSequence[i] = sequence[i];
     }
 
     operations = 0;
 }
 
-// Destructor
-ArithSeq::~ArithSeq() {
-    delete[] sequence;
-    delete[] originalSequence;
-}
+// PRECONDITION: destructor is no longer needed as dynamic memory is managed by smart pointers
+// ArithSeq::~ArithSeq() {}
 
 // Private utility function for copy
 void ArithSeq::copy(const ArithSeq& src) {
     a1 = src.a1;
     dst = src.dst;
+
     n = src.n;
     maxOperations = src.maxOperations;
     operations = 0; // new objects will be set to 0
 
-    sequence = new int[n];
+    sequence = shared_ptr<int[]>(new int[n]);
     for (int i = 0; i < n; i++) {
         sequence[i] = src.sequence[i];
     }
 
-    originalSequence = new int[n];
+    originalSequence = shared_ptr<int[]>(new int[n]);
     for (int i = 0; i < n; i++) {
         originalSequence[i] = src.originalSequence[i];
     }
 }
 
-// Overloaded Assignment Operator
+// Overloaded Operators
+// PRECONDIITON: A valid arith seq object is given to be added to every value in the current sequence,
+//				 otherwise an error will be thrown
+// POSTCONDITION: All values within the ArithSeq object will be added to to the src object passed in. The opertion will
+//				  only iterate to the lowest array size that is being altered in the operation.
+ArithSeq ArithSeq::operator+(const ArithSeq& src) {
+
+  	if (src.n == 0) { throw invalid_argument("Adding error: Please provide a valid ArithSeq"); }
+
+    ArithSeq temp(src);
+	temp += src; // reuse exisiting operator +=
+    return temp;
+}
+
+// PRECONDIITON: A valid integer is given to increase every value in the sequence by num, otherwise an error will be thrown
+// POSTCONDITION: All values within the ArithSeq object will be added to to the integer passed in.
+ArithSeq ArithSeq::operator+(int num) {
+
+  	if (num <= 0) { throw invalid_argument("Adding error: Please provide values larger than 0"); }
+
+    ArithSeq temp(*this);
+    temp += num; // reuse exisiting operator +=
+    return temp;
+}
+
+// PRECONDIITON: A valid arith seq object is given, otherwise an error will be thrown
+// POSTCONDITION: All values within the ArithSeq object will be added the ArithSeq values passed in.
+ArithSeq& ArithSeq::operator+=(const ArithSeq& src) {
+
+  	if (src.n == 0) { throw invalid_argument("Adding error: Please provide a valid ArithSeq"); }
+
+    int min_index = (n < src.n) ? n : src.n; // Code from OperatorOverload PPTX: Dr. Dingle
+
+    for (int i = 0; i < min_index; i++) {
+    	sequence[i] += src.sequence[i];
+    }
+
+    return *this;
+}
+
+// PRECONDIITON: A valid integer is given, otherwise an error will be thrown
+// POSTCONDITION: All values within the ArithSeq object will be added to to the integer passed in.
+ArithSeq& ArithSeq::operator+=(int num) {
+
+  	if (num <= 0) { throw invalid_argument("Adding error: Please provide values larger than 0"); }
+
+    for (int i = 0; i < n; i++) {
+    	sequence[i] += num;
+    }
+
+    return *this;
+}
+
+// PRECONDIITON: A valid arith seq object is given.
+// POSTCONDITION: All values within the ArithSeq object will be made equal to the src object passed in
 ArithSeq &ArithSeq::operator=(const ArithSeq& src) {
     if (this == &src) { return *this; } // Guard clause
-
-    delete[] sequence;
-    delete[] originalSequence;
 
     copy(src);
     return *this;
 }
 
+// PRECONDITION: Both sequences should have the same values and length to return true
+bool ArithSeq::operator==(const ArithSeq& src) {
+  if (n != src.n) { return false; }
+
+  for (int i = 0; i < n; i++) {
+    if (sequence[i] != src.sequence[i])
+      return false;
+  }
+  return true;
+}
+
+// PRECONDITION: Both sequences should not have the same values and length to return true
+bool ArithSeq::operator!=(const ArithSeq& src) {
+	return !(*this == src); // negate == operation
+}
+
+// PRECONDIITON: A valid arith seq object is given. For pre-increment all values of the object will be incremented by 1
+// POSTCONDITION: All values within the ArithSeq object will be incremented by 1
+void ArithSeq::operator++() {
+  for (int i = 0; i < n; i++) {
+    sequence[i]++;
+  }
+}
+
+// PRECONDIITON: A valid arith seq object is given. For post-increment all values of the object will be incremented by 1
+// POSTCONDITION: All values within the ArithSeq object will be incremented by 1
+void ArithSeq::operator++(int) {
+  for (int i = 0; i < n; i++) {
+    ++sequence[i];
+  }
+}
+
+// PRECONDIITON: A valid arith seq object is given. For pre-decrement all values of the object will be decremented by 1
+// POSTCONDITION: All values within the ArithSeq object will be decremented by 1
+void ArithSeq::operator--() {
+  for (int i = 0; i < n; i++) {
+    sequence[i]--;
+  }
+}
+
+// PRECONDIITON: A valid arith seq object is given. For post-decrement all values of the object will be decremented by 1
+// POSTCONDITION: All values within the ArithSeq object will be decremented by 1
+void ArithSeq::operator--(int) {
+  for (int i = 0; i < n; i++) {
+    --sequence[i];
+  }
+}
+
+// PRECONDIITON: A valid arith seq object is given with a valid index passed into the method. If an invalid index is given,
+//				 an exception will be thrown to the client
+// POSTCONDITION: The [] accessor will return an integer of the value at the index of arithSeq
+int ArithSeq::operator[](int index) {
+  if (index > n || index < 0) { throw invalid_argument("ArithSeq index is out of bounds!"); }
+  return sequence[index];
+}
 
 // Copy Constructor
 ArithSeq::ArithSeq(const ArithSeq& src) {
@@ -113,30 +217,34 @@ ArithSeq::ArithSeq(ArithSeq&& src) {
     dst = src.dst;
     n = src.n;
     maxOperations = src.maxOperations;
-    sequence = src.sequence;
-    originalSequence = src.originalSequence;
     operations = src.operations;
+
+    originalSequence = std::move(src.originalSequence);
+    sequence = std::move(src.sequence);
 
     src.a1 = 0;
     src.dst = 0;
     src.n = 0;
     src.maxOperations = 0;
-    src.sequence = 0;
-    src.originalSequence = 0;
+    src.sequence = nullptr;
+    src.originalSequence = nullptr;
     src.operations = 0;
 }
 
 // Move Constructor
 ArithSeq &ArithSeq::operator=(ArithSeq&& src) {
+  if (this != &src) { // guard
     swap(a1, src.a1);
     swap(dst, src.dst);
     swap(n, src.n);
+
     swap(maxOperations, src.maxOperations);
     swap(sequence, src.sequence);
+
     swap(originalSequence, src.originalSequence);
     swap(operations, src.operations);
-
-    return *this;
+  }
+  return *this;
 }
 
 // Operations from P1
@@ -149,12 +257,12 @@ void ArithSeq::exceedsMaxOperations() {
 	operations++;
 }
 
-int* ArithSeq::getSequence() {
+shared_ptr<int[]> ArithSeq::getSequence() {
     if (n == 0) {
         throw invalid_argument("Sequence is empty");
     }
 
-    return sequence;
+	return sequence;
 }
 
 int ArithSeq::getKthValue(int k) {
@@ -163,7 +271,7 @@ int ArithSeq::getKthValue(int k) {
     }
 
     exceedsMaxOperations();
-    return getSequence()[k];
+    return sequence[k];
 }
 
 int ArithSeq::divisibleBy(int divisor) {
@@ -185,6 +293,10 @@ int ArithSeq::divisibleBy(int divisor) {
     return count;
 }
 
+int ArithSeq::getSize() {
+  return n;
+}
+
 void ArithSeq::modifySequence(int p, int q) {
     if (p < 0 || p >= n) {
         throw invalid_argument("p must be between 0 and sequence length");
@@ -192,7 +304,7 @@ void ArithSeq::modifySequence(int p, int q) {
 
     if (q == 0) return; // ignore no change
 
-    for (int i = p; i < n; i += (p == 0 ? 1 : q)) { // user can change sequence from 0
+    for (int i = p; i < n; i ++) { // user can change sequence from 0
         sequence[i] += q;
     }
 
@@ -222,4 +334,6 @@ bool ArithSeq::canPerformMoreOperations() {
  *     Deviations to the original sequence formula will be performed by the ModifySequence method.
  *   6. The getKthValue method parameter must recieve a value larger than 0 and less than the sequence length.
  *   7. The divisibleBy method parameter must not equal 0
+* 	 8. "In C++17 it is recommended that the form array form std::shared_ptr<T[]> should be used rather than
+ * 		constructing a std::shared_ptr<T> from a std::unique_ptr<T[]> in C++11 and C++14" - cppreference
  */

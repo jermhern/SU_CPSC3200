@@ -6,7 +6,6 @@
 #include "AsymPattern.h"
 #include "ArithSeq.h"
 
-#include <map>
 #include <iostream>
 #include <stdexcept>
 
