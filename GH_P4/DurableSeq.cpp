@@ -36,11 +36,10 @@
  *        should be closed when Dispose() is called.
  *      - Changes to the file will be reflected when Dispose() is called.
 *  5. Overloaded Operators
-* 	- >> and << will not be overloaded as operators +, += have been provided to stream data into thre desired object, and
-	  due to the complexity of the object, the client can use public methods .getSize() provided to print out the data, rather
-* 	  than attempting to access any data from files.
+* 	- >> will not be overloaded as operators +, += have been provided to stream data into thre desired object, and
+	  due to the complexity of the object
 * 	- the << operator provides a convenient way to print all of the ArithSeq objects that are present within the current
-* 	  AsymPattern object with information to view index as well
+* 	  DurableSeq object with information to view index as well
 * 	- The +, += operators will work with other DurableSeq objects due to their complexity
  *  - The post/pre-fix operators ++ and -- will increment or decrement every value, in every ArithSeq object, by 1
 * 	- Equality operators ==/!= have been provided and return a boolean regarding the equality of the DurableSeq Objects
@@ -71,7 +70,7 @@ DurableSeq::DurableSeq(ArithSeq* sequences, int size, string name): sequences_()
     originalSequences_ = shared_ptr<ArithSeq[]>(new ArithSeq[size_]);
 
     for (int i = 0; i < size_; i++) {
-        // AsymPattern will not own objects
+        // DurableSeq will not own objects
         sequences_[i] = sequences[i];
         originalSequences_[i] = sequences[i];
     }
@@ -104,7 +103,7 @@ void DurableSeq::writeData(ArithSeq &sequence) {
 //				 sequences are the same, otherwise false will be returned. OriginalSequences will not be compared,
 // 				 only the current sequences within each object will be looked at.
 // POSTCONDITION: No data is altered, a boolean will be returned depending on the equality of the currently active
-// 				  sequence within the AsymPattern objects
+// 				  sequence within the DurableSeq objects
 bool DurableSeq::operator==(const DurableSeq& src) {
   if (size_ != src.size_) { return false; }
 
@@ -120,14 +119,14 @@ bool DurableSeq::operator==(const DurableSeq& src) {
 
 // PRECONDITION: If both DurableSeq objects should not have the same sequence values and length, != will return true
 // POSTCONDITION: No data is altered, a boolean will be returned depending on the equality of the currently active
-// 				  sequence within the AsymPattern objects
+// 				  sequence within the DurableSeq objects
 bool DurableSeq::operator!=(const DurableSeq& src) {
   return !(*this == src); // negate == operation
 }
 
 // POST & PRE DECREMENT: Will share the same behavior
-// PRECONDIITON: A valid AsymPattern object is given. For pre-increment all sequence values of the object will be incremented by 1
-// POSTCONDITION: All values within the AsymPattern object will be incremented by 1, and changes will be writted to file
+// PRECONDIITON: A valid DurableSeq object is given. For pre-increment all sequence values of the object will be incremented by 1
+// POSTCONDITION: All values within the DurableSeq object will be incremented by 1, and changes will be writted to file
 void DurableSeq::operator++() {
   for (int i = 0; i < size_; i++) {
     for (int j = 0; j < sequences_[i].getSize(); j++) {
@@ -137,8 +136,8 @@ void DurableSeq::operator++() {
   }
 }
 
-// PRECONDIITON: A valid arith AsymPattern is given. For post-increment all sequence values of the object will be incremented by 1
-// POSTCONDITION: All values within the AsymPattern object will be incremented by 1, and changes will be writted to file
+// PRECONDIITON: A valid arith DurableSeq is given. For post-increment all sequence values of the object will be incremented by 1
+// POSTCONDITION: All values within the DurableSeq object will be incremented by 1, and changes will be writted to file
 void DurableSeq::operator++(int) {
   for (int i = 0; i < size_; i++) {
     for (int j = 0; j < sequences_[i].getSize(); j++) {
@@ -149,8 +148,8 @@ void DurableSeq::operator++(int) {
 }
 
 // POST & PRE DECREMENT: Will share the same behavior
-// PRECONDIITON: A valid AsymPattern object is given. For pre-decrement all sequence values of the object will be decremented by 1
-// POSTCONDITION: All values within the AsymPattern object will be decremented by 1, and changes will be writted to file
+// PRECONDIITON: A valid DurableSeq object is given. For pre-decrement all sequence values of the object will be decremented by 1
+// POSTCONDITION: All values within the DurableSeq object will be decremented by 1, and changes will be writted to file
 void DurableSeq::operator--() {
   for (int i = 0; i < size_; i++) {
     for (int j = 0; j < sequences_[i].getSize(); j++) {
@@ -160,8 +159,8 @@ void DurableSeq::operator--() {
   }
 }
 
-// PRECONDIITON: A valid arith AsymPattern is given. For post-decrement all sequence values of the object will be decremented by 1
-// POSTCONDITION: All values within the AsymPattern object will be decremented by 1, and changes will be writted to file
+// PRECONDIITON: A valid arith DurableSeq is given. For post-decrement all sequence values of the object will be decremented by 1
+// POSTCONDITION: All values within the DurableSeq object will be decremented by 1, and changes will be writted to file
 void DurableSeq::operator--(int) {
   for (int i = 0; i < size_; i++) {
     for (int j = 0; j < sequences_[i].getSize(); j++) {
@@ -171,8 +170,30 @@ void DurableSeq::operator--(int) {
   }
 }
 
+// PRECONDIITON: A valid arith DurableSeq is given with a valid index passed into the method. If an invalid index is given,
+//				 an exception will be thrown to the client
+// POSTCONDITION: The [] accessor will return the DurableSeq ArithSeq from the index of DurableSeq, accessed by [index]
+ArithSeq DurableSeq::operator[](int index) {
+	if (index > size_ || index < 0) { throw invalid_argument("DurableSeq index is out of bounds!"); }
+   	return sequences_[index];
+}
+
+// PRECONDIITON: A valid arith DurableSeq is given with a valid index passed into the method.
+// POSTCONDITION: The << accessor will print all of the ArithSeq objects from DurableSeq
+ostream& operator<<(ostream& out, const DurableSeq& a) {
+  for (int i = 0; i < a.size_; i++) {
+    out << "Sequence[" << i << "]: ";
+    for (int j = 0; j < a.sequences_[i].getSize(); j++) {
+      out << a.sequences_[i][j] << " ";
+    }
+    out << endl;
+  }
+
+  return out;
+}
+
 // reset()
-// PRECONDITION: On construction of the AsymPattern object, a copy was created to store the originalSequence_
+// PRECONDITION: On construction of the DurableSeq object, a copy was created to store the originalSequence_
 //               of the sequence_ that has been modified over the life of the object.
 // POST-CONDITION: Utilizing the stored copy originalSequence_, data for the original sequence_ will be released
 //                 and a sequence_ will be constructed with the original size and data from initial sequence copy
@@ -247,7 +268,7 @@ bool DurableSeq::atCapacity() {
   return size_ <= MAX_CAPACITY;
 }
 
-// PRECONDITION: src is a potentially modified AsymPattern object of length '.Length'
+// PRECONDITION: src is a potentially modified DurableSeq object of length '.Length'
 // POST-CONDITION: DeepCopy will copy values from src into original object to modify the sequence
 bool DurableSeq::seqExists(int key) {
     if (key >= 0 && key < size_) { return true; }

@@ -13,7 +13,7 @@ using namespace std;
 
 class AsymPattern: public ArithSeq {
 	public:
-		AsymPattern(ArithSeq*, int size);
+		AsymPattern(ArithSeq* sequence, int size);
 		AsymPattern(const AsymPattern&); // Copy Constructor
 		AsymPattern(AsymPattern&& src); // move
 		~AsymPattern();
@@ -33,7 +33,7 @@ class AsymPattern: public ArithSeq {
 		void operator++(int) override;
 		void operator--() override;
 		void operator--(int) override;
-		shared_ptr<int[]> operator[](int);
+		ArithSeq operator[](int);
 		friend ostream& operator<<(ostream&, const AsymPattern&);
 
 	private:

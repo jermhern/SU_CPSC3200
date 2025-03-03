@@ -175,9 +175,9 @@ void AsymPattern::operator--(int) {
 // PRECONDIITON: A valid arith AsymPattern is given with a valid index passed into the method. If an invalid index is given,
 //				 an exception will be thrown to the client
 // POSTCONDITION: The [] accessor will return the ArithSeq shared_ptr from the index of AsymPattern, accessed by [index]
-shared_ptr<int[]> AsymPattern::operator[](int index) {
+ArithSeq AsymPattern::operator[](int index) {
 	if (index > size_ || index < 0) { throw invalid_argument("AsymPattern index is out of bounds!"); }
-   	return sequences_[index].getSequence();
+   	return sequences_[index];
 }
 
 // PRECONDIITON: A valid arith AsymPattern is given with a valid index passed into the method.

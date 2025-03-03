@@ -13,7 +13,7 @@
 
 class DurableSeq: public ArithSeq {
     public:
-        DurableSeq(ArithSeq*, int size = 10, string changes = "name");
+        DurableSeq(ArithSeq* sequence, int size = 10, string changes = "name");
         DurableSeq(const DurableSeq&); // Copy Constructor
         DurableSeq(DurableSeq&& src); // move
         ~DurableSeq();
@@ -33,7 +33,8 @@ class DurableSeq: public ArithSeq {
         void operator++(int) override;
         void operator--() override;
         void operator--(int) override;
-        shared_ptr<int[]> operator[](int);
+        ArithSeq operator[](int);
+        friend ostream& operator<<(ostream&, const DurableSeq&);
 
     private:
         shared_ptr<ArithSeq[]> sequences_;
