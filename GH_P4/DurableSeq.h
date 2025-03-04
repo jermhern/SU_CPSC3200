@@ -43,7 +43,6 @@ class DurableSeq: public ArithSeq {
         int size_;
         int originalSize_;
 
-        const string PATH = "/Users/jeremy/Desktop/School/wq2025/3200/GH_3200/GH_P4/";
         string fileName;
         string bulkChanges;
         ofstream fin;

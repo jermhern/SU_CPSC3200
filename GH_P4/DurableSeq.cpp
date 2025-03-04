@@ -74,7 +74,7 @@ DurableSeq::DurableSeq(ArithSeq* sequences, int size, string name): sequences_()
         originalSequences_[i] = sequences[i];
     }
 
-    fileName = PATH + name + ".txt";
+    fileName = name + ".txt";
     fin.open(fileName.c_str());
     if (fin.fail()) {
         throw invalid_argument("Error creating/opening" + fileName);
@@ -82,7 +82,10 @@ DurableSeq::DurableSeq(ArithSeq* sequences, int size, string name): sequences_()
 }
 
 // PRECONDITION: destructor is no longer needed as dynamic memory is managed by smart pointers
-DurableSeq::~DurableSeq() {}
+DurableSeq::~DurableSeq() {
+  cout << fileName << " file has been closed." << endl;
+  fin.close();
+}
 
 // WriteData()
 // PRECONDITION: seq is a potentially modified DurableSeq object of length '.Length'. There is a valid changes.txt

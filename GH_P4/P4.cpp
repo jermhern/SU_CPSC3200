@@ -361,7 +361,9 @@ void runTests() {
     testDurableOperators();
 }
 
-void exitTesting() {}
+void exitTesting() {
+    cout << "All tests completed successfully!" << endl;
+}
 
 int main() {
     runTests();
