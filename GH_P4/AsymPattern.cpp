@@ -298,8 +298,8 @@ void AsymPattern::resetSeq(int key) {
 * 5. "In C++17 it is recommended that the form array form std::shared_ptr<T[]> should be used rather than
 * 		constructing a std::shared_ptr<T> from a std::unique_ptr<T[]> in C++11 and C++14" - cppreference
 * 6. AsymPattern supports ==/!= operators, post/pre-fix operators for incrementation and subtraction (++/--), and
- * 		the [] accessor which will return an shared_ptr belonging to the ArithSeq object. AsymPattern does
- * 		fully support integer addition through +=/+ operators, it is also compatible with other AsymPattern objects.
+ * 		the [] accessor which will return an shared_ptr belonging to the ArithSeq object. AsymPattern does not
+ * 		fully support integer addition through +=/+ operators, it is compatible with other AsymPattern objects.
 * 		The << operator has been overloaded to support smart printing of ArithSeq objects as well as its index.
 * 		The >> has not been overloaded due to the flexibility of using +/+= to write data to the object.
 */

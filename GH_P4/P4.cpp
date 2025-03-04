@@ -26,16 +26,6 @@ ArithSeq aSeqs[4] = {aSeq, aSeq1, aSeq2, aSeq3};
 ArithSeq aSeqs1[2] = {aSeq4, aSeq5};
 ArithSeq aSeqs2[5] = {aSeq, aSeq5, aSeq7, aSeq2, aSeq3};
 
-// Initialize various AsymPattern objects with varying sizes and sequences
-AsymPattern aPattern(aSeqs, 4);
-AsymPattern aPattern1(aSeqs1, 2);
-AsymPattern aPattern2(aSeqs2, 5);
-
-// Initialize various DurableSeq objects with varying sizes and sequences
-DurableSeq dPattern(aSeqs, 4, "dPatternOne");
-DurableSeq dPattern1(aSeqs1, 2, "dPatternTwo");
-DurableSeq dPattern2(aSeqs2, 5); // Default name used
-
 void testArithSeqOperators() {
     cout << "===== Testing ArithSeq Operators =====" << endl;
 
@@ -234,6 +224,11 @@ void testArithSeqOperators() {
 }
 
 void testAsymOperators() {
+    // Initialize various AsymPattern objects with varying sizes and sequences
+    AsymPattern aPattern(aSeqs, 4);
+    AsymPattern aPattern1(aSeqs1, 2);
+    AsymPattern aPattern2(aSeqs2, 5);
+
     cout << "===== Testing AsymPattern Operators =====" << endl;
 
     cout << "===== (==) Equality Testing =====" << endl;
@@ -298,6 +293,11 @@ void testAsymOperators() {
 }
 
 void testDurableOperators() {
+    // Initialize various DurableSeq objects with varying sizes and sequences
+    DurableSeq dPattern(aSeqs, 4, "dPatternOne");
+    DurableSeq dPattern1(aSeqs1, 2, "dPatternTwo");
+    DurableSeq dPattern2(aSeqs2, 5); // Default name used
+
     cout << endl << "===== Testing DurableSeq Operators =====" << endl;
 
     cout << "===== (==) Equality Testing =====" << endl;
@@ -355,10 +355,74 @@ void testDurableOperators() {
     cout << "==============================================" << endl;
 }
 
+void testArithSeqDeepCopying() {
+    cout << endl << "===== Testing ArithSeq Copying =====" << endl;
+    ArithSeq original(1, 1, 10);
+    ArithSeq copy = original;
+
+    // modify copy
+    copy += 10;
+
+    cout << "original: ";
+    for (int i = 0; i < original.getSize(); i++) {
+        cout << original[i] << " ";
+    }
+
+    cout << endl;
+
+    cout << "copy: ";
+    for (int i = 0; i < copy.getSize(); i++) {
+        cout << copy[i] << " ";
+    }
+
+    cout << endl << "==============================================" << endl;
+    cout << endl;
+}
+
+void testArithSeqReset_Modification() {
+    cout << endl << "===== Testing ArithSeq Reset/Modification =====" << endl;
+    ArithSeq changes(1, 2, 20, 30);
+
+    cout << "Before reset: ";
+    for (int i = 0; i < changes.getSize(); i++) {
+        cout << changes[i] << " ";
+    }
+
+    cout << endl;
+
+    changes.modifySequence(3, 2);
+    changes.modifySequence(1, 2);
+    changes.modifySequence(2, 2);
+    changes.modifySequence(3, 5);
+    changes.modifySequence(0, 2);
+    changes += 3;
+
+    cout << "After changes: ";
+    for (int i = 0; i < changes.getSize(); i++) {
+        cout << changes[i] << " ";
+    }
+
+    cout << endl;
+
+    changes.reset(); // restore original state
+
+    cout << "After reset: ";
+    for (int i = 0; i < changes.getSize(); i++) {
+        cout << changes[i] << " ";
+    }
+
+    cout << endl;
+
+    cout << endl << "==============================================" << endl;
+    cout << endl;
+}
+
 void runTests() {
     testArithSeqOperators();
     testAsymOperators();
     testDurableOperators();
+    testArithSeqDeepCopying();
+    testArithSeqReset_Modification();
 }
 
 void exitTesting() {
@@ -366,6 +430,7 @@ void exitTesting() {
 }
 
 int main() {
+
     runTests();
     exitTesting();
 
