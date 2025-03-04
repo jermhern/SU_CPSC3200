@@ -36,14 +36,13 @@
  *        should be closed when Dispose() is called.
  *      - Changes to the file will be reflected when Dispose() is called.
 *  5. Overloaded Operators
-* 	- >> will not be overloaded as operators +, += have been provided to stream data into thre desired object, and
-	  due to the complexity of the object
+* 	- >> will not be overloaded as operators +, += have been provided to stream data into the desired object
 * 	- the << operator provides a convenient way to print all of the ArithSeq objects that are present within the current
 * 	  DurableSeq object with information to view index as well
 * 	- The +, += operators will work with other DurableSeq objects due to their complexity
  *  - The post/pre-fix operators ++ and -- will increment or decrement every value, in every ArithSeq object, by 1
 * 	- Equality operators ==/!= have been provided and return a boolean regarding the equality of the DurableSeq Objects
-* 	- the [] accessor has been overloaded which provides a way to return a shared_ptr to the valid index provided
+* 	- the [] accessor has been overloaded which provides a way to return a ArithSeq to the valid index provided
  */
 
 

@@ -257,7 +257,6 @@ void testAsymOperators() {
     cout << endl << "==============================================" << endl;
 
     cout << "===== (++) Post-Pre Increment Testing =====" << endl;
-
     cout << "AsymPattern A Before Pre-Increment: " << endl << aPattern1 << endl;
     ++aPattern1;
     cout << "AsymPattern A After Pre-Increment: " << endl << aPattern1 << endl;
@@ -268,7 +267,6 @@ void testAsymOperators() {
     cout << endl << "==============================================" << endl;
 
     cout << "===== (--) Post-Pre Decrement Testing =====" << endl;
-
     cout << "AsymPattern A Before Pre-Decrement: " << endl << aPattern << endl;
     --aPattern;
     cout << "AsymPattern A After Pre-Decrement: " << endl << aPattern << endl;
@@ -321,13 +319,40 @@ void testDurableOperators() {
     cout << endl << "==============================================" << endl;
 
     cout << "===== (++) Post-Pre Increment Testing =====" << endl;
+    cout << "AsymPattern A Before Pre-Increment: " << endl << dPattern << endl;
+    ++dPattern;
+    cout << "AsymPattern A After Pre-Increment: " << endl << dPattern << endl;
+
+    cout << "AsymPattern A Before Post-Increment: " << endl << dPattern1 << endl;
+    dPattern1++;
+    cout << "AsymPattern A After Post-Increment: " << endl << dPattern1;
     cout << endl << "==============================================" << endl;
 
     cout << "===== (--) Post-Pre Decrement Testing =====" << endl;
+    cout << "AsymPattern A Before Pre-Decrement: " << endl << dPattern2 << endl;
+    --dPattern2;
+    cout << "AsymPattern A After Pre-Decrement: " << endl << dPattern2 << endl;
+
+    cout << "AsymPattern A Before Post-Decrement: " << endl << dPattern << endl;
+    dPattern--;
+    cout << "AsymPattern A After Post-Decrement: " << endl << dPattern;
     cout << endl << "==============================================" << endl;
 
     cout << "===== ([]) Accessor Testing =====" << endl;
+    cout << "dPattern1: " << endl << dPattern1;
+    cout << "ArithSeq temp(dPattern[1]): " << endl;
+    ArithSeq temp(dPattern[1]);
+    cout << "temp[1]: ";
+    for (int i = 0; i < aSeq1.getSize(); i++) {
+        cout << temp[i] << " ";
+    }
     cout << endl << "==============================================" << endl;
+
+    cout << "===== (<<) Ostream Operator Testing =====" << endl;
+    cout << "dPattern <<:" << endl << dPattern;
+    cout << "dPattern1 <<:" << endl << dPattern1;
+    cout << "dPattern2 <<:" << endl << dPattern2;
+    cout << "==============================================" << endl;
 }
 
 void runTests() {

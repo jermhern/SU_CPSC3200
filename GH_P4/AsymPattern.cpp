@@ -37,7 +37,7 @@
  *  - The post/pre-fix operators ++ and -- will increment or decrement every value, for AsymPattern
  * 	  in every ArithSeq object, by 1
 * 	- Equality operators ==/!= have been provided and return a boolean regarding the equality of the AsymPattern Objects
-* 	- the [] accessor has been overloaded which provides a way to return a shared_ptr to the valid index provided
+* 	- the [] accessor has been overloaded which provides a way to return a ArithSeq to the valid index provided
 */
 
 // AsymPattern()
